@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<body class="text-center" style="padding:50px; background: url(https://images.unsplash.com/photo-1484977975800-86a4c7bd7235?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=593866fabe9435237658ef44224d80bc&w=1000&q=80) ">
+
+  	<div class="jumbotron" style="padding:20px; background: transparent; margin-top: 60px">
+    		<h1 style="font-size: 50px">Sign Up Successfully</h1>
+            <h3 style="font-size: 20px">Hello {{name}}, now you are able to register any event you like.</h3>
+
+    </div>
+
+    <button class="btn btn-primary" type="button" style="width: 240px; margin: auto; height: 43px; margin-top: 30px" onclick="location.href='/home'">Start</button>
+      <!-- <button class="btn btn-primary" type="submit" style="width: 240px; margin: auto; height: 43px; margin-top: 30px" data-toggle="modal" data-target="#myModal">Sign up</button> -->
+      <!-- <button class="btn btn-primary" type="button" style="width: 240px; margin: auto; height: 43px; margin-top: 30px" data-toggle="modal" data-target="#Unsuccessful">Sign up</button> -->
+</body>
+{% endblock %}

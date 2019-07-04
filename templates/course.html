@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="jumbotron" style="padding:20px; margin-top: 40px">
+  <h1 style="font-size: 40px; text-align: center">Create a course</h1>
+</div>
+
+<form class="form", method="POST">
+    <div class="form-group" style="width: 240px; margin: auto">
+            <p style="font size: 3; color: red"><b>{{message}}</b></p>
+            <label class="col-form-label" for="inputDefault">Enter a Name for your course:</label>
+            <input type="text" class="form-control" placeholder="Name" name="name" style="height: 43px">
+            </br>
+
+            <!-- <label class="col-form-label" for="inputDefault">Enter details:</label>
+            <input type="text" class="form-control" placeholder="Details" name="detail" style="height: 120px">
+            </br> -->
+
+            <label class="col-form-label" for="inputDefault">Enter details:</label>
+                <textarea type="text" class="form-control" placeholder="Details" name="detail" class="form-control" id="exampleTextarea" rows="4"></textarea>
+            </br>
+
+            <label class="col-form-label" for="inputDefault">Enter a maximum capacity:</label>
+            <input type="number" min=0 class="form-control" placeholder="Max Cap." name="capacity" style="height: 43px">
+            </br>
+
+            <label class="col-form-label" for="inputDefault">Enter a venue:</label>
+            <input type="text" class="form-control" placeholder="Venue" name="venue" style="height: 43px">
+            </br>
+
+            <label class="col-form-label" for="inputDefault">Start date:</label>
+            <input type="datetime-local" class="form-control" name="start_date" style="height: 43px">
+            </br>
+
+            <label class="col-form-label" for="inputDefault">End date:</label>
+            <input type="datetime-local" class="form-control" name="end_date" style="height: 43px">
+            </br>
+
+            <label class="col-form-label" for="inputDefault">Enter a deregister period:</label>
+            <input type="datetime-local" class="form-control" name="deregister" style="height: 43px">
+            </br>
+
+            <!-- Now each course also has the early bird register preiod and fee -->
+            <label class="col-form-label" for="inputDefault">Early bird register period:</label>
+            <input type="datetime-local" class="form-control" name="early_bird" style="height: 43px">
+            </br>
+
+            <label class="col-form-label" for="inputDefault">Register Fee($):</label>
+            <input type="number" min=0 class="form-control" placeholder="Fee" name="fee" style="height: 43px">
+            </br>
+    </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit" style="width: 240px; margin: auto; height: 43px; margin-top: 30px" name="addSession">Create</button>
+    </form>
+<!-- <h3>Create a course</h3>
+<form name="form", method="POST">
+    Enter a name for your course:</br> <input type = "text" name="name"></br>
+    Enter details:</br> <input type = "text" name="detail"></br>
+    Enter a maximum capacity:</br> <input type = "number" min = 0 name= "capacity"></br>
+    Enter a venue:</br> <input type = "text" name= "venue"></br>
+    Start date: </br><input type="date" name="start_date"></input></br>
+    End date: </br><input type="date" name="end_date"></input></br>
+    Enter a deregister period:</br><input type="date" name="deregister"></input></br>
+    <div style="margin: 10px 0px">
+        <button type="submit">Create</button>
+    </div>
+</form>
+<div><font size="3" color="red">{{message}}</font></div> -->
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="jumbotron" style="padding:20px; margin-top: 40px">
+            <h1 style="font-size: 40px; text-align: center">Create a seminar</h1>
+    </div>
+
+<form class="form", method="POST">
+    <div class="form-group" style="width: 240px; margin: auto">
+            <p style="font size: 3; color: red"><b>{{message}}</b></p>
+            <label class="col-form-label" for="inputDefault">Enter a name for your seminar:</label>
+            <input type="text" class="form-control" placeholder="Name" name="name" style="height: 43px">
+            </br>
+            <!-- <label class="col-form-label" for="inputDefault">Enter details:</label>
+            <input type="text" class="form-control" placeholder="Details" name="detail" style="height: 43px">
+            </br> -->
+
+            <label class="col-form-label" for="inputDefault">Enter details:</label>
+                <textarea type="text" class="form-control" placeholder="Details" name="detail" class="form-control" id="exampleTextarea" rows="4"></textarea>
+            </br>
+
+            <!-- <label class="col-form-label" for="inputDefault">Enter a maximum capacity:</label>
+            <input type="number" min=0 class="form-control" placeholder="Max Cap." name="capacity" style="height: 43px">
+            </br> -->
+            <label class="col-form-label" for="inputDefault">Enter venue:</label>
+            <input type="text" class="form-control" placeholder="Venue" name="venue" style="height: 43px">
+            </br>
+            <label class="col-form-label" for="inputDefault">Start date:</label>
+            <input type="datetime-local" class="form-control" name="start_date" style="height: 43px">
+            </br>
+            <label class="col-form-label" for="inputDefault">End date:</label>
+            <input type="datetime-local" class="form-control" name="end_date" style="height: 43px">
+            </br>
+            <label class="col-form-label" for="inputDefault">Enter a deregister period:</label>
+            <input type="datetime-local" class="form-control" name="deregister" style="height: 43px">
+            </br>
+
+            <label class="col-form-label" for="inputDefault">Early bird register period:</label>
+            <input type="datetime-local" class="form-control" name="early_bird" style="height: 43px">
+            </br>
+
+            <label class="col-form-label" for="inputDefault">Register Fee($):</label>
+            <input type="number" min=0 class="form-control" placeholder="Fee" name="fee" style="height: 43px">
+            </br>
+    </div>
+
+    <!--
+        Enter your zID:</br> <input type = "text" name="username"></br>
+        Password:</br> <input type = "password" name="password"></br>
+    -->
+      <button class="btn btn-lg btn-primary btn-block" type="submit" style="width: 240px; margin: auto; height: 43px; margin-top: 30px" name="addSession" onclick="location.href='./session.html'">Add Session</button>
+    </form>
+{% endblock %}

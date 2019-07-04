@@ -1,0 +1,211 @@
+@font-face {
+  font-family: 'sans-serif';
+}
+
+html {
+    font-family: "sans-serif";
+}
+
+#container {
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+/* **************************************************
+ *
+ * Navigation Bar
+ *
+ * **************************************************/
+
+ .header {
+     height: 50px;
+     font-family: "Arial", sans-serif;
+     font-size: 15px;
+     line-height: 1.25;
+     background-color: rgba(239, 197, 205, 0.5);
+     position: fixed;
+     top: 0;
+     left: 2%;
+     right: 2%;
+     z-index: 99;
+     /*width: 100%;*/
+     font-weight: 500;
+     /* text-align: left; */
+ }
+
+.icon {
+    float: left;
+    height: 45px;
+    width: 45px;
+    padding: 1px 0px 4px 2%;
+}
+
+.header ul {
+    top: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.header li {
+     display:inline;
+}
+.header li a {
+    display:inline-block;
+    color: #4A4A4A;
+    text-align: center;
+    padding: 17.5px 20px;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.header a:hover {
+    color: white;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
+}
+
+/* dropdown */
+
+.dropdown {
+	float: right;
+  overflow: hidden;
+}
+
+.dropdown-btn {
+	background-color: rgba(239, 197, 205, 0);
+	color: #4A4A4A;
+  padding: 17.5px 20px;
+	border: none;
+	cursor: pointer;
+  height: 50px;
+  width: 100px;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+  background-color: #f1f1f1;
+	width: 100px;
+	/* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
+	z-index: 1;
+}
+.dropdown-content a {
+	color: black;
+	text-decoration: none;
+	display: block;
+  font-size: 11px;
+}
+.dropdown-content a:hover {
+	color: white;
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+/* **************************************************
+ *
+ * Cover Photos
+ *
+ * **************************************************/
+
+/* .photo-container-1 {
+    margin-top: 67.5px;
+    background-image: url("https://imgs.nmplus.hk/wp-content/uploads/2015/04/01_resize.jpg");
+    /*url("https://imgs.nmplus.hk/wp-content/uploads/2015/04/01_resize.jpg");*/
+    /* background-size: cover;
+    background-position: bottom center;
+    height: 700px;
+    width: 100%;
+} */
+
+/* #intro {
+    padding-top: 120px;
+    text-align: center;
+}
+
+.photo-container-2 {
+    margin-top: 17.5px;
+    background-image: url("./../images/Haruna_Kojima_1.jpg");
+    background-size: cover;
+    background-position: bottom center;
+    height: 700px;
+    width: 100%;
+}
+
+.photo-container-3 {
+    margin-top: 17.5px;
+    background-image: url("./../images/Haruna_Kojima_2.jpg");
+    background-size: cover;
+    background-position: bottom center;
+    height: 700px;
+    width: 100%;
+} */
+
+/* #ch {
+    color: #AAA;
+    font-family: 'Covered By Your Grace', sans-serif;
+    font-size: 60px;
+    font-weight: 288;
+    line-height: 76px;
+    margin: 0;
+    text-align: center;
+} */
+
+/* .container h1 {
+    color: rgb(224, 96, 120);
+    font-family: 'Covered By Your Grace', sans-serif;
+    font-size: 29px;
+    font-weight: 288;
+    line-height: 76px;
+    margin: 0;
+    margin-bottom: 10%;
+} */
+
+h2 {
+    color: #AAA;
+    font-family: 'Yantramanav', sans-serif;
+    font-size: 16px;
+    font-weight: 100;
+    letter-spacing: 2px;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+/* h3 {
+    font-family: 'Yantramanav', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-align: left;
+    padding: 10px 0px 10px 10px;
+} */
+
+/*
+#container p {
+    color: #333;
+    font-family: 'Yantramanav', sans-serif;
+    font-size: 16px;
+    font-weight: 100;
+    margin: 0;
+    text-align: center;
+} */
+
+/* **************************************************
+ *
+ * Footer
+ *
+ * **************************************************/
+
+#footer {
+    padding-top: 100px;
+    font-size: 10px;
+    text-align: center;
+    display: block;
+}

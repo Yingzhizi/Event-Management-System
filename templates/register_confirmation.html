@@ -1,0 +1,7 @@
+
+{% if success == 1%}
+    <p>Hello, {{user.name}}, you have already successfully register to {{event.event_id}} <b>{{event.name}}</b><p>
+    <p>{{event}}</p>
+{% else %}
+    <p>Sorry:( </br>you cannot register anymore, capacity if full</p>
+{% endif %}

@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block content %}
+<main role="main">
+
+    <div class="jumbotron">
+        <div class="container" style="padding:5px; margin-top: 40px">
+            <h3 style="text-align: center">Hi {{current_user.name}}, here is your dashboard ：）</h3>
+        </div>
+    </div>
+
+    <h4 style="margin-left: 30px"><b>#Open events that you are currently registered for</b></h4></br>
+    <div class="container">
+        <div class="row">
+            <h4 style="margin-left: 10px; color: blue">#COURSE</h4></br>
+                {% for event in courseReceipts %}
+                    {% if event.status == 1 %}
+                        <div class="col-md-4">
+                            <h2>{{event.name}}</h2>
+                            <p>Start date: {{event.start_date}}</p>
+                            <p>Detail: {{event.detail}}</p>
+                            <p>Venue: {{event.venue}}</p>
+                            <p><a class="btn btn-secondary" href="{{url_for('display_event', event_type="Course", event_id=event.event_id, event_name=event.name)}}" role="button">View details &raquo;</a></p>
+                        </div>
+                     {% endif %}
+                {% endfor %}
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <h4 style="margin-left: 10px; color: orange">#SEMINAR</h4></br>
+            {% for event in seminarReceipts %}
+                {% if event.status == 1 %}
+                    <div class="col-md-4">
+                        <h2>{{event.name}}</h2>
+                        <p>Start date: {{event.start_date}}</p>
+                        <p>Detail: {{event.detail}}</p>
+                        <p>Venue: {{event.venue}}</p>
+                        <p><a class="btn btn-secondary" href="{{url_for('display_event', event_type="Seminar", event_id=event.event_id, event_name=event.name)}}" role="button">View details &raquo;</a></p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <hr>
+
+    <h4 style="margin-left: 30px">#Closed or cancelled events that you were registered for</h4></br>
+    <div class="container">
+        <div class="row">
+            <h4 style="margin-left: 10px; color: blue">#COURSE</h4></br>
+                {% for event in courseReceipts %}
+                    {% if event.status != 1 %}
+                    <div class="col-md-4">
+                        <h2>{{event.name}}</h2>
+                        {% if event.status == 0 %}
+                            <p style="font size: 3; color: red"><b>CLOSED</b></p>
+                        {% elif event.status == -1 %}
+                            <p style="font size: 3; color: red"><b>CANCELLED</b></p>
+                        {% endif %}
+                            <p><a class="btn btn-secondary" href="{{url_for('display_event', event_type="Course", event_id=event.event_id, event_name=event.name)}}" role="button">View details &raquo;</a></p>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <h4 style="margin-left: 10px; color: orange">#SEMINAR</h4></br>
+            
+            {% for event in seminarReceipts %}
+                {% if event.status != 1 %}
+                <div class="col-md-4">
+                    <h2>{{event.name}}</h2>
+                    {% if event.status == 0 %}
+                        <p style="font size: 3; color: red"><b>CLOSED</b></p>
+                    {% elif event.status == -1 %}
+                        <p style="font size: 3; color: red"><b>CANCELLED</b></p>
+                    {% endif %}
+                    <p><a class="btn btn-secondary" href="{{url_for('display_event', event_type="Seminar", event_id=event.event_id, event_name=event.name)}}" role="button">View details &raquo;</a></p>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <hr>
+
+    {% if current_user.role == 'trainer' %}
+    <h4 style="margin-left: 30px">#Current and past events that you have posted</h4></br>
+        <div class="container">
+            <div class="row">
+                {% for event in courses %}
+                    {% if current_user.zID == event.convenor %}
+                        {% if event.status != -1 %}
+                        <div class="col-md-4">
+                            <h2>{{event.name}}</h2>
+                            <p><a class="btn btn-secondary" href="{{url_for('display_event', event_type="Course", event_id=event.event_id, event_name=event.name)}}" role="button">View details &raquo;</a></p>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+
+                {% for event in seminars %}
+                    {% if current_user.zID == event.convenor %}
+                        <div class="col-md-4">
+                            {% if event.status != -1 %}
+                            <h2>{{event.name}}</h2>
+                            <p><a class="btn btn-secondary" href="{{url_for('display_event', event_type="Seminar", event_id=event.event_id, event_name=event.name)}}" role="button">View details &raquo;</a></p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <hr>
+
+    <h4 style="margin-left: 30px">#Cancelled Event</h4></br>
+    <div class="container">
+        <div class="row">
+            {% for event in courses %}
+                {% if current_user.zID == event.convenor and event.status != 0 and event.status != 1 %}
+                    <div class="col-md-4">
+                        <h2>{{event.name}}</h2>
+                        <p><a class="btn btn-secondary" href="{{url_for('display_event', event_type="Course", event_id=event.event_id, event_name=event.name)}}" role="button">View details &raquo;</a></p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            {% for event in seminars %}
+                {% if current_user.zID == event.convenor and event.status != 0 and event.status != 1 %}
+                    <div class="col-md-4">
+                        <h2>{{event.name}}</h2>
+                        <p><a class="btn btn-secondary" href="{{url_for('display_event', event_type="Seminar", event_id=event.event_id, event_name=event.name)}}" role="button">View details &raquo;</a></p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</main>
+
+{% endblock %}

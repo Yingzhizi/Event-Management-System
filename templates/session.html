@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="jumbotron" style="padding:20px; margin-top: 40px; margin-left:-50px">
+  <h1 style="font-size: 40px; text-align: center">Create a Session</h1>
+</div>
+<h1 style="font-size: 30px;text-align: center"><b>Seminar's Name: {{seminar.name}}</b></h1></br>
+
+    {% for session in sessions %}
+        <li style="font-size: 15px;text-align: center">{{session.topic}}</li></br>
+
+    {% endfor %}
+<form name="form", method="POST">
+    <div class="form-group" style="width: 240px; margin: auto">
+        <p style="font size: 3; color: red"><b>{{message}}</b></p>
+        <!-- {% if check == 1 %}
+            <p style="font size: 3; color: red"><b>{{session.presenter}} has been registered to the EMS system</b></p>
+        {% endif %} -->
+        {% if check == 1%}
+        <div class="alert alert-dismissible alert-primary">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <p>Guest Speaker <strong>{{sessions[count - 1].presenter}}</strong> of session <b>{{sessions[count-1].topic}}</b> has been registered to the EMS system</p>
+        </div>
+        {% endif %}
+        <label class="col-form-label" for="inputDefault">Enter a topic:</label>
+        <input type="text" class="form-control" placeholder="Topic" name="topic" style="height: 43px">
+        </br>
+
+        <label class="col-form-label" for="inputDefault">Name of Presenter</label>
+
+        <!-- <select name="presenter_type">
+            <option value="guest_speaker">Guest Speaker</option>
+            <option value="unsw_stuff">UNSW stuff</option>
+        </select> -->
+        <div class="form-group">
+            <select name="presenter_type">
+                <option selected="">Select presenter type</option>
+                <option value="guest_speaker">Guest Speaker</option>
+                <option value="unsw_stuff">UNSW Stuff</option>
+            </select>
+        </div>
+        <!-- <button type="button" class="btn btn-default" style="width:10%; margin-left: 60px" data-toggle="modal" data-target="#myModal">Register</button> -->
+        <input type="text" class="form-control" placeholder="Presenter" name="presenter" style="height: 43px">
+        </br>
+
+        <label class="col-form-label" for="inputDefault">Details:</label>
+        <input type="text" class="form-control" placeholder="Details" name="detail" style="height: 43px">
+        </br>
+
+        <label class="col-form-label" for="inputDefault">Maximum capacity:</label>
+        <input type="number" min=0 class="form-control" placeholder="Max Cap." name="capacity" style="height: 43px">
+        </br>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit" style="width: 240px; margin: auto; height: 43px; margin-top: 30px" name="submit" value="createSession">Add Session</button>
+
+        {% if count >= 2%}
+            <button class="btn btn-lg btn-primary btn-block" type="submit" style="width: 240px; margin: auto; height: 43px; margin-top: 30px" name="submit" value="createSeminar">Create</button>
+        {% endif %}
+    </div>
+</form>
+{% endblock %}

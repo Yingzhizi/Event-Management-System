@@ -1,0 +1,205 @@
+<!--modal can't be part of base this implementation is fine-->
+<!--can use a new html for this-->
+<!-- this this the pop up window to show that the user successfully register for a sepcific event -->
+<div class="modal fade" id="myModal" tabindex="-1" role="document" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center" style="width:38%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Confirm Registration</h4>
+                </div>
+                <div class="modal-body">
+
+                  <p>Hello, {{current_user.name}}.</p>
+                  <p>You are attempting to register for <b>{{event.name}}</b></p>
+                  <p>Please click confirm to reserve your spot.</p>
+
+                  <!-- this info only shown for guest -->
+                  {% if current_user.role == 'guest' %}
+                  <!-- free is 50% discount fot early bird -->
+                  <p>Cost: ${{fee}}</p>
+                  {% endif %}
+
+                </div>
+                <div class="modal-footer" style="margin-right:0%">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="location.href='/register/{{event_type}}/{{event.event_id}}'">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="jumbotron" style="padding:20px; margin-top: 40px; margin-left:-50px">
+  <h1 style="font-size: 40px; text-align: center">Detail of event</h1>
+</div>
+  <div class="bg-1">
+  <div class="container">
+    <ul class="list-group">
+      <li class="list-group-item">
+    <h2 style="margin-top: 20px; margin-left: 30px"><b>{{event.name}}</b></h2>
+
+
+    <p style="margin-left: 60px; font-size: 16px">Convenor: {{event.convenor}}</p>
+    <p style="margin-left: 60px; font-size: 16px">Details: {{event.detail}}</p>
+    {% if event_type == 'Course' %}
+    <p style="margin-left: 60px; font-size: 16px">Capacity: {{event.capacity}}</p>
+    {% endif %}
+    <p style="margin-left: 60px; font-size: 16px">Deregister period: {{event.deregister}}</p>
+    <p style="margin-left: 60px; font-size: 16px">Status:
+      {% if event.status == 0 %}
+        Closed
+      {% elif event.status == 1 %}
+        Open
+      {% else %}
+        Cancelled
+      {% endif %}
+    </p>
+    <p style="margin-left: 60px; font-size: 16px">Venue: {{event.venue}}</p>
+    <p style="margin-left: 60px; font-size: 16px">Start Date: {{event.start_date}}</p>
+    <p style="margin-left: 60px; font-size: 16px">End Date: {{event.end_date}}</p>
+    <p style="margin-left: 60px; font-size: 16px">Early bird register period: {{event.early_bird}}</p>
+    {% if current_user.is_authenticated %}
+        {% if current_user.role == 'guest' or current_user.zID == event.convenor %}
+            <p style="margin-left: 60px; font-size: 16px">Register Fee: ${{event.register_fee}}</p>
+        {% endif %}
+    {% endif %}
+    {% if event_type == 'Course' %}
+    <p style="margin-left: 60px; font-size: 16px">Remaining Seat: {{event.capacity - event.noAttendees}}/{{event.capacity}}</p>
+    {% endif %}
+  </br>
+  {% if event.status == 1 %}
+        {% if current_user.zID == event.convenor %}
+            <button type="button" class="btn btn-default" onclick="location.href='/{{event_type}}/{{event.event_id}}/0'" style="width:10%; margin-left: 60px">CLOSE</button>
+            {% if ableToCancel == 1 %}
+                <button type="button" class="btn btn-default" onclick="location.href='/{{event_type}}/{{event.event_id}}/-1'" style="width:10%; margin-left: 60px">CANCEL</button>
+            {% endif %}
+        {% endif %}
+  {% endif %}
+
+  {% if event.status != 0 and event.status != 1 %}
+        {% if current_user.zID == event.convenor %}
+            <button type="button" class="btn btn-default" onclick="location.href='/{{event_type}}/{{event.event_id}}/1'" style="width:10%; margin-left: 60px">REOPEN</button>
+        {% endif %}
+  {% endif %}
+    {% if current_user.zID == event.convenor %}
+  </br>
+
+    <h2 style="margin-top: 20px; margin-left: 30px"><b>Attendee list:</b></h2>
+        {% for attendee in attendees_list %}
+            <p style="margin-left: 60px; font-size: 16px">{{attendee.name}}</p>
+        {% endfor %}
+    </p>
+    {% endif %}
+    <form>
+    {% if sessions != [] %}
+        <h2 style="margin-top: 20px; margin-left: 30px"><b>Consists of sessions:</b></h2>
+        <div class="container">
+            <div class="row" style="margin-top: 20px; margin-left: 30px">
+                {% for session in sessions %}
+                    <div class="col-md-4">
+                         <h3 style="margin-left: 30px">{{session.topic}}</h3>
+                         {% if current_user.zID != event.convenor and current_user.is_authenticated and event.status == 1 %}
+                         {% if session.SessionID in registered_sessions %}
+                             {% if ableToDeregister == 1 %}
+                             <button type="button" class="btn btn-default" onclick="location.href='/deregister/Session/{{session.SessionID}}'" style="width:25%; margin-left: 25px">Deregister</button>
+                             {% endif %}
+                         {% elif session.capacity != session.noAttendees and ableToRegister == 1%}
+                             <button type="button" class="btn btn-default" style="width:25%; margin-left: 25px" data-toggle="modal" data-target="#register{{session.topic}}">Register</button>
+
+                             <div class="modal fade" id="register{{session.topic}}" tabindex="-1" role="document" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+                                 <div class="vertical-alignment-helper">
+                                     <div class="modal-dialog vertical-align-center" style="width:38%">
+                                         <div class="modal-content">
+                                             <div class="modal-header">
+                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                 <h4 class="modal-title">Confirm Registration</h4>
+                                             </div>
+                                             <div class="modal-body">
+
+                                               <p>Hello, {{current_user.name}}.</p>
+                                               <p>You are attempting to register for <b>{{session.topic}}</b> which is a session for <b>{{event.name}}</b></p>
+                                               <p>Please click confirm to reserve your spot.</p>
+                                               <!-- this info only shown for guest -->
+                                               {% if current_user.role == 'guest' %}
+                                               <p>Cost:${{fee}}</p>
+                                               {% endif %}
+
+                                             </div>
+                                             <div class="modal-footer" style="margin-right:0%">
+                                                 <button type="button" class="btn btn-default" data-dismiss="modal" onclick="location.href='/register/Session/{{session.SessionID}}'">Confirm</button>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+
+
+                         {% else %}
+                             Event is full
+                         {% endif %}
+                         {% endif%}
+
+                      <!-- show session detail: method2: pop up -->
+                      <p><a style="width:10%; margin-left: 30px" role="button" data-toggle="modal" data-target="#{{session.topic}}">View details &raquo;</a></p>
+
+                      <div class="modal fade" id="{{session.topic}}" tabindex="-1" role="document" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+                          <div class="vertical-alignment-helper">
+                              <div class="modal-dialog vertical-align-center" style="width:38%">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                          <h4 class="modal-title">{{session.topic}}</h4>
+                                      </div>
+                                      <div class="modal-body">
+                                          <p><b>Presenter:</b> {{session.detail}}</p>
+                                          <p><b>Details:</b> {{session.presenter}}</p>
+                                          <p><b>Maximum capacity:</b> {{session.capacity}} </p>
+                                          <p><b>Remaining Seat:</b>{{session.capacity - session.noAttendees}}/{{session.capacity}} </p>
+                                      </div>
+                                      <div class="modal-footer" style="margin-right:0%">
+                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                    </div>
+                {% endfor %}
+
+          </div>
+        </div>
+    {% endif %}
+
+    <!--need to have this be reloaded every time the page is clicked back-->
+    {% if current_user.is_authenticated %}
+        {% if current_user.zID != event.convenor %}
+            {% if sessions == [] and event.status == 1%}
+                {% if current_user in attendees_list %}
+                    {% if ableToDeregister == 1 %}
+                        <button type="button" class="btn btn-default" onclick="location.href='/deregister/Course/{{event.event_id}}'" style="width:10%; margin-left: 60px">Deregister</button>
+                    {% endif %}
+                {% elif event.capacity != event.noAttendees and ableToRegister == 1%}
+                    <button type="button" class="btn btn-default" style="width:10%; margin-left: 60px" data-toggle="modal" data-target="#myModal">Register</button>
+                {% elif event.capacity == event.noAttendees %}
+                    Event is full
+                {% endif %}
+            {% endif %}
+    </form>
+        {% else %}
+        </br>
+            <p style="margin-left: 35px ; font-size: 16px">Go to dashboard to edit :
+            <button type="button" class="btn btn-default" onclick="location.href='/dashboard'">Dashboard</button>
+            </p>
+        {% endif %}
+    {% endif %}
+      </li>
+    </ul>
+  </div>
+</div>
+{% endblock %}
