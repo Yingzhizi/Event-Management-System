@@ -2,7 +2,7 @@
 A system open for student and course/seminar holder, also for public.
 Student can able to see also the information of seminar or course and choose to book the event
 Provider able to post event, and modify them.
-<details are coming soon>
+[details are coming soon]
 
 # How to run?
 first create python cirtual environment
