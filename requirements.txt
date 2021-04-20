@@ -9,7 +9,7 @@ MarkupSafe==1.0
 more-itertools==4.1.0
 packaging==16.8
 pluggy==0.6.0
-py==1.5.3
+py==1.10.0
 pyparsing==2.2.0
 pytest==3.5.1
 six==1.10.0
